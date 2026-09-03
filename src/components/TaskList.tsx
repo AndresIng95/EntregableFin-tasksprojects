@@ -1,7 +1,7 @@
 import Alert from '@mui/material/Alert'
 import CircularProgress from '@mui/material/CircularProgress'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
+//import List from '@mui/material/List'
+//import ListItem from '@mui/material/ListItem'
 //import ListItemText from '@mui/material/ListItemText'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
@@ -49,17 +49,16 @@ export function TaskList({
         Tareas ({tasks.length})
       </Typography>
 
-      <List>
+      <Stack spacing={2}>
         {tasks.map((task) => (
-        <ListItem key={task.id} divider>
           <TaskItem
-          task={task}
-          projects={projects}
-          onChanged={onChanged}
+            key={task.id}
+            task={task}
+            projects={projects}
+            onChanged={onChanged}
           />
-        </ListItem>
         ))}
-      </List>
+      </Stack>
     </>
   )
 }

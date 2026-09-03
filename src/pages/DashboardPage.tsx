@@ -5,6 +5,9 @@ import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { useNavigate } from 'react-router-dom'
+import DarkModeIcon from '@mui/icons-material/DarkMode'
+import LightModeIcon from '@mui/icons-material/LightMode'
+import { useThemeMode } from '../context/ThemeContext'
 
 import { ProjectForm } from '../components/ProjectForm'
 import { ProjectList } from '../components/ProjectList'
@@ -20,6 +23,7 @@ import { useTaskForm } from '../hooks/useTaskForm'
 export function DashboardPage() {
   const { logout } = useAuth()
   const navigate = useNavigate()
+  const { darkMode, toggleDarkMode } = useThemeMode()
   const { projects, loading, error, refetch } = useProjects()
   const projectForm = useProjectForm({ onSuccess: refetch })
   const { tasks,loading: tasksLoading,error: tasksError, refetch: refetchTasks,} = useTasks()
@@ -44,9 +48,18 @@ export function DashboardPage() {
             Fase 5 — crear, listar, editar y eliminar proyectos.
           </Typography>
         </Box>
-        <Button startIcon={<LogoutIcon />} onClick={handleLogout}>
-          Cerrar sesión
-        </Button>
+        <Stack direction="row" spacing={1}>
+          <Button
+            startIcon={darkMode ? <LightModeIcon /> : <DarkModeIcon />}
+            onClick={toggleDarkMode}
+          >
+            {darkMode ? 'Modo claro' : 'Modo oscuro'}
+          </Button>
+
+          <Button startIcon={<LogoutIcon />} onClick={handleLogout}>
+            Cerrar sesión
+          </Button>
+        </Stack>
       </Stack>
 
       <Paper sx={{ p: 3, mb: 3 }}>

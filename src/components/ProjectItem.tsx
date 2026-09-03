@@ -8,6 +8,8 @@ import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
 import { useProjectActions } from '../hooks/useProjectActions'
 import type { Project } from '../types'
 
@@ -89,48 +91,92 @@ export function ProjectItem({ project, onChanged }: ProjectItemProps) {
   }
 
   return (
-    <Paper variant="outlined" sx={{ p: 2 }}>
-      <Stack spacing={1.5}>
-        {actions.error && <Alert severity="error">{actions.error}</Alert>}
-
-        <Stack
-          direction={{ xs: 'column', sm: 'row' }}
-          justifyContent="space-between"
-          alignItems={{ xs: 'stretch', sm: 'flex-start' }}
-          spacing={2}
-        >
-          <Stack spacing={0.5}>
-            <Typography variant="subtitle1">{project.name}</Typography>
-            <Typography variant="body2" color="text.secondary">
-              {project.description || 'Sin descripción'}
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              ID {project.id} · Owner {project.ownerId} · Creado {project.createdAt}
-            </Typography>
+    <Card
+      variant="outlined"
+      sx={{
+        borderRadius: 3,
+        transition: 'transform 0.2s, box-shadow 0.2s',
+        '&:hover': {
+          transform: 'translateY(-2px)',
+          boxShadow: 4,
+        },
+      }}
+    >
+      <CardContent>
+        <Stack spacing={2}>
+          {actions.error && (
+            <Alert severity="error">
+              {actions.error}
+            </Alert>
+          )}
+  
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            justifyContent="space-between"
+            alignItems={{ xs: 'stretch', sm: 'flex-start' }}
+            spacing={2}
+          >
+            <Stack spacing={0.75}>
+              <Typography
+                variant="h6"
+                fontWeight={600}
+              >
+                {project.name}
+              </Typography>
+  
+              <Typography
+                variant="body2"
+                color="text.secondary"
+              >
+                {project.description || 'Sin descripción'}
+              </Typography>
+            </Stack>
+  
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={1}
+            >
+              <Button
+                size="small"
+                variant="outlined"
+                startIcon={<EditIcon />}
+                onClick={actions.startEditing}
+                disabled={actions.busy}
+              >
+                Editar
+              </Button>
+  
+              <Button
+                size="small"
+                variant="outlined"
+                color="error"
+                startIcon={<DeleteIcon />}
+                onClick={confirmDelete}
+                disabled={actions.busy}
+              >
+                {actions.deleting ? 'Eliminando…' : 'Eliminar'}
+              </Button>
+            </Stack>
           </Stack>
-
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
-            <Button
-              size="small"
-              startIcon={<EditIcon />}
-              onClick={actions.startEditing}
-              disabled={actions.busy}
-            >
-              Editar
-            </Button>
-
-            <Button
-              size="small"
-              color="error"
-              startIcon={<DeleteIcon />}
-              onClick={confirmDelete}
-              disabled={actions.busy}
-            >
-              {actions.deleting ? 'Eliminando…' : 'Eliminar'}
-            </Button>
+  
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            spacing={1}
+          >
+            <Typography variant="caption" color="text.secondary">
+              ID: {project.id}
+            </Typography>
+  
+            <Typography variant="caption" color="text.secondary">
+              Owner: {project.ownerId}
+            </Typography>
+  
+            <Typography variant="caption" color="text.secondary">
+              Creado: {project.createdAt}
+            </Typography>
           </Stack>
         </Stack>
-      </Stack>
-    </Paper>
+      </CardContent>
+    </Card>
   )
 }

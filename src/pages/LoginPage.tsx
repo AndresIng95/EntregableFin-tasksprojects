@@ -9,10 +9,14 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { API_URL } from '../types'
+import DarkModeIcon from '@mui/icons-material/DarkMode'
+import LightModeIcon from '@mui/icons-material/LightMode'
+import { useThemeMode } from '../context/ThemeContext'
 
 export function LoginPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
+  const { darkMode, toggleDarkMode } = useThemeMode()
   const [username, setUsername] = useState('ana')
   const [password, setPassword] = useState('ana123')
   const [error, setError] = useState<string | null>(null)
@@ -35,6 +39,19 @@ export function LoginPage() {
 
   return (
     <Box maxWidth={480} mx="auto" mt={8}>
+      <Stack
+      direction="row"
+      justifyContent="flex-end"
+      mb={2}
+      >
+        <Button
+          startIcon={darkMode ? <LightModeIcon /> : <DarkModeIcon />}
+          onClick={toggleDarkMode}
+        >
+          {darkMode ? 'Modo claro' : 'Modo oscuro'}
+        </Button>
+      </Stack>
+
       <Typography variant="h4" gutterBottom>
         JWT Auth Demo
       </Typography>

@@ -5,6 +5,9 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Chip from '@mui/material/Chip'
 import { useTaskActions } from '../hooks/useTaskActions'
 import type { Project, Task } from '../types'
 
@@ -126,71 +129,128 @@ export function TaskItem({ task, projects, onChanged }: TaskItemProps) {
   }
 
   return (
-    <Stack spacing={1} py={2}>
-        {action.error && (
-        <Alert severity="error">
-        {action.error}
-        </Alert>
-        )}
-      <Typography variant="subtitle1">
-        {task.title}
-      </Typography>
-
-      <Typography variant="body2" color="text.secondary">
-        {task.description || 'Sin descripción'}
-      </Typography>
-
-      <Typography variant="body2">
-        Proyecto: {project?.name ?? `ID ${task.projectId}`}
-      </Typography>
-
-      <TextField
-        select
-        label="Estado"
-        value={task.status}
-        onChange={(e) => {
-            void action.handleStatusChange(e.target.value)
-        }}
-        disabled={action.changingStatus || action.deleting}
-        size="small"
-        sx={{ maxWidth: 220 }}
-        >
-        <MenuItem value="TODO">TODO</MenuItem>
-        <MenuItem value="IN_PROGRESS">IN_PROGRESS</MenuItem>
-        <MenuItem value="DONE">DONE</MenuItem>
-      </TextField>
-
-      <Typography variant="body2">
-        Prioridad: {task.priority}
-      </Typography>
-
-      <Typography variant="body2">
-        Assignee: {task.assigneeId ?? 'Sin responsable'}
-      </Typography>
-
-      <Typography variant="body2">
-        Fecha límite: {task.dueDate}
-      </Typography>
-
-      <Stack direction="row" spacing={1}>
-        <Button
-            variant="outlined"
-            onClick={action.startEditing}
-            disabled={action.deleting}
-        >
-        Editar
-        </Button>
-
-        <Button
-            variant="outlined"
-            color="error"
-            startIcon={<DeleteIcon />}
-            onClick={confirmDelete}
-            disabled={action.deleting}
-        >
-            {action.deleting ? 'Eliminando…' : 'Eliminar'}
-        </Button>
+    <Card
+      variant="outlined"
+      sx={{
+        width: '100%',
+        borderRadius: 3,
+        transition: 'transform 0.2s, box-shadow 0.2s',
+        '&:hover': {
+          transform: 'translateY(-2px)',
+          boxShadow: 4,
+        },
+      }}
+    >
+      <CardContent>
+        <Stack spacing={2}>
+          {action.error && (
+            <Alert severity="error">
+              {action.error}
+            </Alert>
+          )}
+  
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            justifyContent="space-between"
+            alignItems={{ xs: 'stretch', sm: 'flex-start' }}
+            spacing={2}
+          >
+            <Stack spacing={0.75}>
+              <Typography
+                variant="h6"
+                fontWeight={600}
+              >
+                {task.title}
+              </Typography>
+  
+              <Typography
+                variant="body2"
+                color="text.secondary"
+              >
+                {task.description || 'Sin descripción'}
+              </Typography>
+  
+              <Typography variant="body2">
+                Proyecto: <strong>{project?.name ?? `ID ${task.projectId}`}</strong>
+              </Typography>
+            </Stack>
+  
+            <TextField
+              select
+              label="Estado"
+              value={task.status}
+              onChange={(e) => {
+                void action.handleStatusChange(e.target.value)
+              }}
+              disabled={
+                action.changingStatus || action.deleting
+              }
+              size="small"
+              sx={{ minWidth: 160 }}
+            >
+              <MenuItem value="TODO">TODO</MenuItem>
+              <MenuItem value="IN_PROGRESS">
+                IN_PROGRESS
+              </MenuItem>
+              <MenuItem value="DONE">DONE</MenuItem>
+            </TextField>
+          </Stack>
+  
+          <Stack
+            direction="row"
+            spacing={1}
+            flexWrap="wrap"
+            useFlexGap
+          >
+            <Chip
+              label={`Prioridad: ${task.priority}`}
+              size="small"
+              variant="outlined"
+            />
+  
+            <Chip
+              label={
+                task.assigneeId
+                  ? `Responsable: ${task.assigneeId}`
+                  : 'Sin responsable'
+              }
+              size="small"
+              variant="outlined"
+            />
+  
+            <Chip
+              label={`Fecha límite: ${task.dueDate}`}
+              size="small"
+              variant="outlined"
+            />
+          </Stack>
+  
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            spacing={1}
+          >
+            <Button
+              variant="outlined"
+              onClick={action.startEditing}
+              disabled={action.deleting}
+            >
+              Editar
+            </Button>
+  
+            <Button
+              variant="outlined"
+              color="error"
+              startIcon={<DeleteIcon />}
+              onClick={confirmDelete}
+              disabled={action.deleting}
+            >
+              {action.deleting
+                ? 'Eliminando…'
+                : 'Eliminar'}
+            </Button>
+          </Stack>
         </Stack>
-    </Stack>
+      </CardContent>
+    </Card>
   )
 }
