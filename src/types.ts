@@ -32,8 +32,8 @@ export interface AuthResponse {
     title: string
     description?: string
     priority: string
-    assigneeId: number
-    dueDate: string
+    assigneeId?: number
+    dueDate?: string
   }
 
 

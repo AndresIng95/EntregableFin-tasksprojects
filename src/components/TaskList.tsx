@@ -2,21 +2,26 @@ import Alert from '@mui/material/Alert'
 import CircularProgress from '@mui/material/CircularProgress'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
+//import ListItemText from '@mui/material/ListItemText'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-import type { Task } from '../types'
+import type { Project, Task } from '../types'
+import { TaskItem } from './TaskItem'
 
 interface TaskListProps {
   tasks: Task[]
+  projects: Project[]
   loading: boolean
   error: string | null
+  onChanged?: () => void
 }
 
 export function TaskList({
   tasks,
+  projects,
   loading,
   error,
+  onChanged,
 }: TaskListProps) {
   if (loading) {
     return (
@@ -46,16 +51,13 @@ export function TaskList({
 
       <List>
         {tasks.map((task) => (
-          <ListItem key={task.id} divider>
-            <ListItemText
-              primary={task.title}
-              secondary={
-                `${task.description || 'Sin descripción'} — ` +
-                `Estado: ${task.status} — ` +
-                `Prioridad: ${task.priority}`
-              }
-            />
-          </ListItem>
+        <ListItem key={task.id} divider>
+          <TaskItem
+          task={task}
+          projects={projects}
+          onChanged={onChanged}
+          />
+        </ListItem>
         ))}
       </List>
     </>

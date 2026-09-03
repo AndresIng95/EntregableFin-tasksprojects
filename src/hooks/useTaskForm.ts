@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { createTask } from '../services/taskService'
+import type { NewTask } from '../types'
 
 interface UseTaskFormOptions {
   onSuccess?: () => void
@@ -15,11 +16,15 @@ export function useTaskForm({ onSuccess }: UseTaskFormOptions = {}) {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+
+  const dueDateValid =
+  dueDate === '' ||
+  dueDate >= new Date().toISOString().slice(0, 10)
   const valid =
     projectId !== '' &&
     title.trim().length >= 3 &&
-    assigneeId !== '' &&
-    dueDate !== ''
+    title.trim().length <= 120 &&
+    dueDateValid
 
   function reset() {
     setProjectId('')
@@ -40,13 +45,19 @@ export function useTaskForm({ onSuccess }: UseTaskFormOptions = {}) {
     setError(null)
 
     try {
-      await createTask(Number(projectId), {
+      const body: NewTask = {
         title: title.trim(),
         description: description.trim() || undefined,
         priority,
-        assigneeId: Number(assigneeId),
-        dueDate,
-      })
+        ...(assigneeId !== '' && {
+          assigneeId: Number(assigneeId),
+        }),
+        ...(dueDate !== '' && {
+          dueDate,
+        }),
+      }
+      
+      await createTask(Number(projectId), body)
 
       reset()
       onSuccess?.()

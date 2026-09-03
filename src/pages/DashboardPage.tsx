@@ -71,8 +71,10 @@ export function DashboardPage() {
         <Paper sx={{ p: 3, mt: 3 }}>
             <TaskList
             tasks={tasks}
+            projects={projects}
             loading={tasksLoading}
             error={tasksError}
+            onChanged={refetchTasks}
             />
         </Paper>
     </Box>

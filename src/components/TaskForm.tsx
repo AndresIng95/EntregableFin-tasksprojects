@@ -107,8 +107,8 @@ export function TaskForm({
         type="number"
         value={assigneeId}
         onChange={(e) => setAssigneeId(e.target.value)}
-        required
         fullWidth
+        helperText="Opcional"
       />
 
       <TextField
@@ -116,8 +116,8 @@ export function TaskForm({
         type="date"
         value={dueDate}
         onChange={(e) => setDueDate(e.target.value)}
-        required
         fullWidth
+        helperText="Opcional. Si se inserta, no puede ser fecha pasada."
         slotProps={{
           inputLabel: {
             shrink: true,
