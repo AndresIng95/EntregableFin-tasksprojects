@@ -1,75 +1,107 @@
-# React + TypeScript + Vite
+# TaskFlow – Gestión de Proyectos y Tareas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este entregable es un proyecto final que es una aplicación web desarrollada con React que permite a los usuarios autenticarse y gestionar proyectos y tareas mediante una API REST.
 
-Currently, two official plugins are available:
+El objetivo del proyecto es practicar el desarrollo de una aplicación React completa, incluyendo autenticación, rutas protegidas, consumo de APIs, CRUD, formularios, hooks, Context y despliegue.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Demo
 
-## React Compiler
+**Aplicación:** https://andresing95.github.io/EntregableFin-tasksprojects/
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**API:** https://d3ujwk09smrk9z.cloudfront.net
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologías
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React + TypeScript
+- Vite
+- Material UI (MUI)
+- Axios
+- React Router
+- JWT
+- GitHub Actions
+- GitHub Pages
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📁 Estructura
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+La aplicación está organizada separando responsabilidades:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+src/
+├── components/   # Formularios y componentes de proyectos/tareas
+├── context/      # Autenticación y tema claro/oscuro
+├── hooks/        # Lógica y estado reutilizable
+├── pages/        # Login y Dashboard
+├── services/     # Comunicación con la API mediante Axios
+├── theme.ts      # Configuración de temas MUI
+├── types.ts      # Tipos e interfaces TypeScript
+├── App.tsx       # Rutas y configuración principal
+└── ProtectedRoute.tsx
 
-```
+La comunicación sigue principalmente este flujo:
+Pages → Components → Hooks → Services → Axios → API
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+El usuario inicia sesión mediante la API. La respuesta contiene un JWT, que se almacena en localStorage.
+Axios utiliza un interceptor para agregar automáticamente el token a las peticiones:
+Authorization: Bearer <token>
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+ProtectedRoute comprueba la autenticación antes de permitir el acceso al Dashboard. Si el usuario no está autenticado, es redirigido al Login.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+📡 Consumo de API y CRUD
 
-```
+La comunicación HTTP está centralizada en httpClient.ts y las operaciones están separadas en services.
+
+Proyectos
+GET /projects – listar proyectos
+POST /projects – crear proyecto
+PUT /projects/{id} – actualizar proyecto
+DELETE /projects/{id} – eliminar proyecto
+Tareas
+GET /tasks – listar tareas
+POST /projects/{projectId}/tasks – crear tarea
+PUT /tasks/{id} – actualizar tarea
+PATCH /tasks/{id}/status – cambiar estado
+DELETE /tasks/{id} – eliminar tarea
+
+Se utiliza PUT para actualizar los datos de una tarea y PATCH cuando solamente se modifica su estado.
+
+📝 Formularios y estado
+
+Los formularios utilizan useState y custom hooks para manejar sus valores, validaciones y envío.
+
+Se controlan estados como:
+
+loading
+error
+saving
+deleting
+changingStatus
+
+También se realizan validaciones antes de enviar información a la API, como longitud del título y fecha límite.
+
+🧩 Hooks y Context
+
+Se utilizan custom hooks para separar la lógica de la interfaz:
+useProjects
+useTasks
+useProjectForm
+useTaskForm
+useProjectActions
+useTaskActions
+
+También se implementaron dos Context:
+
+AuthContext – estado relacionado con la autenticación.
+ThemeContext – controla el modo claro/oscuro.
+
+La interfaz utiliza Material UI con temas personalizados para ambos modos.
+
+⚙️ CI/CD y Deploy
+
+El proyecto utiliza GitHub Actions para automatizar el build y deployment.
+La aplicación está publicada mediante GitHub Pages.
+
+👨‍💻 Proyecto Final
+
+Proyecto desarrollado como parte del curso de React.
+
+Autor: Andres
