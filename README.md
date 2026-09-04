@@ -8,7 +8,7 @@ El objetivo del proyecto es practicar el desarrollo de una aplicación React com
 
 **Aplicación:** https://andresing95.github.io/EntregableFin-tasksprojects/
 
-**API:** https://d3ujwk09smrk9z.cloudfront.net
+**API:** https://d3ujwk09smrk9z.cloudfront.net/swagger-ui/index.html
 
 ## 🛠️ Tecnologías
 
