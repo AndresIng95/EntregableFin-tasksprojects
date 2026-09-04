@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useState, type FormEvent } from 'react'
 import { deleteTask, updateTask,updateTaskStatus, } from '../services/taskService'
-import type { NewTask,Task } from '../types'
+import type { NewTask,Task,TaskStatus } from '../types'
 
 interface UseTaskActionsOptions {
   task: Task
@@ -110,7 +110,7 @@ export function useTaskActions({
     }
   }
 
-  async function handleStatusChange(status: string) {
+  async function handleStatusChange(status: TaskStatus) {
     if (saving || deleting || changingStatus) return
   
     setChangingStatus(true)

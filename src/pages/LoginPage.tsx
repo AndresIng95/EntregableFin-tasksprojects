@@ -53,10 +53,10 @@ export function LoginPage() {
       </Stack>
 
       <Typography variant="h4" gutterBottom>
-        JWT Auth Demo
+        Gestion TaskFlow
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Fase 1 — servicio + hook + pantalla de login.
+        Inicia Sesion para manejar tus proyectos y tareas
       </Typography>
 
       <Paper sx={{ p: 3 }}>

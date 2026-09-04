@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { createTask } from '../services/taskService'
-import type { NewTask } from '../types'
+import type { NewTask,TaskPriority } from '../types'
 
 interface UseTaskFormOptions {
   onSuccess?: () => void
@@ -10,7 +10,7 @@ export function useTaskForm({ onSuccess }: UseTaskFormOptions = {}) {
   const [projectId, setProjectId] = useState('')
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [priority, setPriority] = useState('LOW')
+  const [priority, setPriority] = useState<TaskPriority>('LOW')
   const [assigneeId, setAssigneeId] = useState('')
   const [dueDate, setDueDate] = useState('')
   const [submitting, setSubmitting] = useState(false)

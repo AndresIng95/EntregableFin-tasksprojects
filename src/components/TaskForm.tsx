@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import type { Project } from '../types'
+import type { Project,TaskPriority } from '../types'
 
 interface TaskFormProps {
   projects: Project[]
@@ -14,8 +14,8 @@ interface TaskFormProps {
   setTitle: (value: string) => void
   description: string
   setDescription: (value: string) => void
-  priority: string
-  setPriority: (value: string) => void
+  priority: TaskPriority
+  setPriority: (value: TaskPriority) => void
   assigneeId: string
   setAssigneeId: (value: string) => void
   dueDate: string
@@ -94,7 +94,7 @@ export function TaskForm({
         select
         label="Prioridad"
         value={priority}
-        onChange={(e) => setPriority(e.target.value)}
+        onChange={(e) => setPriority(e.target.value as TaskPriority)}
         fullWidth
       >
         <MenuItem value="LOW">LOW</MenuItem>

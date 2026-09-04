@@ -45,7 +45,7 @@ export function DashboardPage() {
             Dashboard
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Fase 5 — crear, listar, editar y eliminar proyectos.
+            Gestion de Proyectos y Tareas Taskflow
           </Typography>
         </Box>
         <Stack direction="row" spacing={1}>

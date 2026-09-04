@@ -16,12 +16,18 @@ import {
   )
   
   export function ThemeProvider({ children }: { children: ReactNode }) {
-    const [darkMode, setDarkMode] = useState(false)
+    const [darkMode, setDarkMode] = useState(() => {
+      return localStorage.getItem('taskflow-dark-mode') === 'true'
+    })
   
     const value = useMemo(
       () => ({
         darkMode,
-        toggleDarkMode: () => setDarkMode((current) => !current),
+        toggleDarkMode: () => setDarkMode((current) => {
+          const next = !current
+          localStorage.setItem('taskflow-dark-mode', String(next))
+          return next
+        }),
       }),
       [darkMode],
     )

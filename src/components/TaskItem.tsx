@@ -9,7 +9,7 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Chip from '@mui/material/Chip'
 import { useTaskActions } from '../hooks/useTaskActions'
-import type { Project, Task } from '../types'
+import type { Project, Task, TaskStatus, TaskPriority } from '../types'
 
 interface TaskItemProps {
   task: Task
@@ -75,7 +75,7 @@ export function TaskItem({ task, projects, onChanged }: TaskItemProps) {
           select
           label="Prioridad"
           value={action.priority}
-          onChange={(e) => action.setPriority(e.target.value)}
+          onChange={(e) => action.setPriority(e.target.value as TaskPriority)}
           fullWidth
         >
           <MenuItem value="LOW">LOW</MenuItem>
@@ -180,7 +180,7 @@ export function TaskItem({ task, projects, onChanged }: TaskItemProps) {
               label="Estado"
               value={task.status}
               onChange={(e) => {
-                void action.handleStatusChange(e.target.value)
+                void action.handleStatusChange(e.target.value as TaskStatus,)
               }}
               disabled={
                 action.changingStatus || action.deleting
