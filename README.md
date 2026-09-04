@@ -36,6 +36,7 @@ src/
 ├── types.ts      # Tipos e interfaces TypeScript
 ├── App.tsx       # Rutas y configuración principal
 └── ProtectedRoute.tsx
+```
 
 La comunicación sigue principalmente este flujo:
 Pages → Components → Hooks → Services → Axios → API
@@ -50,6 +51,7 @@ ProtectedRoute comprueba la autenticación antes de permitir el acceso al Dashbo
 
 La comunicación HTTP está centralizada en httpClient.ts y las operaciones están separadas en services.
 
+```text
 Proyectos
 GET /projects – listar proyectos
 POST /projects – crear proyecto
@@ -61,6 +63,7 @@ POST /projects/{projectId}/tasks – crear tarea
 PUT /tasks/{id} – actualizar tarea
 PATCH /tasks/{id}/status – cambiar estado
 DELETE /tasks/{id} – eliminar tarea
+```
 
 Se utiliza PUT para actualizar los datos de una tarea y PATCH cuando solamente se modifica su estado.
 
@@ -104,4 +107,4 @@ La aplicación está publicada mediante GitHub Pages.
 
 Proyecto desarrollado como parte del curso de React.
 
-Autor: Andres
+Autor: Andres Carlos Barrera
