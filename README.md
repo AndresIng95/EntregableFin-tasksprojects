@@ -57,6 +57,7 @@ GET /projects – listar proyectos
 POST /projects – crear proyecto
 PUT /projects/{id} – actualizar proyecto
 DELETE /projects/{id} – eliminar proyecto
+
 Tareas
 GET /tasks – listar tareas
 POST /projects/{projectId}/tasks – crear tarea
@@ -72,25 +73,26 @@ Se utiliza PUT para actualizar los datos de una tarea y PATCH cuando solamente s
 Los formularios utilizan useState y custom hooks para manejar sus valores, validaciones y envío.
 
 Se controlan estados como:
-
+```text
 loading
 error
 saving
 deleting
 changingStatus
-
+```
 También se realizan validaciones antes de enviar información a la API, como longitud del título y fecha límite.
 
 🧩 Hooks y Context
 
 Se utilizan custom hooks para separar la lógica de la interfaz:
+```text
 useProjects
 useTasks
 useProjectForm
 useTaskForm
 useProjectActions
 useTaskActions
-
+```
 También se implementaron dos Context:
 
 AuthContext – estado relacionado con la autenticación.
